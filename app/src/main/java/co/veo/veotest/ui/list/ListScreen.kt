@@ -4,14 +4,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import co.veo.veotest.Greeting
+import co.veo.veotest.models.Movie
 
 @Composable
 fun ListScreen(
-    listViewModel: ListViewModel
+    movies: State<List<Movie>>
 ) {
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-        Greeting("Movie list")
+        Greeting("Movie list. Movie count: ${movies.value.size}")
     }
 }

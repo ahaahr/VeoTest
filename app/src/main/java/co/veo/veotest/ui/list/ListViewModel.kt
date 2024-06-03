@@ -1,17 +1,37 @@
 package co.veo.veotest.ui.list
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import co.veo.veotest.models.Movie
+import co.veo.veotest.network.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor() : ViewModel() {
+class ListViewModel @Inject constructor(
+    private val apiService: ApiService
+) : ViewModel() {
 
-    fun getMovies(): List<Movie> = listOf(
-        Movie("2001: A Space Odyssey"),
-        Movie("Blade Runner"),
-        Movie("Dune"),
-        Movie("Dune2")
-    )
+    private val mutableMovies = mutableStateOf<List<Movie>>(emptyList())
+    val movies: State<List<Movie>> = mutableMovies
+
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            loadMovies()
+        }
+    }
+
+    fun loadMovies() {
+        val response = apiService.getTrending().execute()
+        val body = response.body()
+        if (response.isSuccessful && body != null)
+            mutableMovies.value = body.results.map {
+                val title = it.originalTitle ?: (it.title ?: (it.name ?: "Unnamed Movie"))
+                Movie(title)
+            }
+    }
 }

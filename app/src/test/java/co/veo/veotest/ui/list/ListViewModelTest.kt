@@ -9,6 +9,6 @@ class ListViewModelTest {
 
     @Test
     fun `given the movie list verify that it's length equals 4`() {
-        Assert.assertEquals(listViewModel.getMovies().size, 4)
+        Assert.assertEquals(listViewModel.loadMovies().size, 4)
     }
 }

@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
             VeoTheme {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = ListDest) {
-                    composable<ListDest> { ListScreen(listViewModel) }
+                    composable<ListDest> { ListScreen(listViewModel.movies) }
                     composable<DetailsDest> { DetailsScreen() }
                 }
             }
