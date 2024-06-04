@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = ListDest) {
                     composable<ListDest> {
                         ListScreen(
-                            state = listViewModel.movies,
+                            listState = listViewModel.movies,
                             onMovieClicked = {
                                 navController.navigate(route = DetailsDest(it.id))
                             }

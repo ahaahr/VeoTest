@@ -14,14 +14,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.veo.veotest.models.MovieDetails
+import co.veo.veotest.ui.common.ErrorScreen
+import co.veo.veotest.ui.common.LoadingScreen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun DetailsScreen(
-    state: State<MovieDetails>
+    detailsState: State<DetailsState>
 ) {
+    when (val state = detailsState.value) {
+        DetailsState.Loading -> LoadingScreen()
+        is DetailsState.Success -> DetailsSuccessScreen(state.movieDetails)
+        is DetailsState.Error -> ErrorScreen(state.error)
+    }
+}
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun DetailsSuccessScreen(movieDetails: MovieDetails) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -30,29 +41,29 @@ fun DetailsScreen(
             .padding(10.dp)
     ) {
         Text(
-            text = state.value.title,
+            text = movieDetails.title,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = 20.dp),
             fontSize = 20.sp
         )
         GlideImage(
-            model = state.value.imageUrl,
+            model = movieDetails.imageUrl,
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = 20.dp)
         )
         Text(
-            text = state.value.overview,
+            text = movieDetails.overview,
             modifier = Modifier.padding(bottom = 20.dp)
         )
         Text(
-            text = "Runtime: ${state.value.runtime}",
+            text = "Runtime: ${movieDetails.runtime}",
             modifier = Modifier.padding(bottom = 20.dp)
         )
         Text(
-            text = "Release date: ${state.value.releaseDate}",
+            text = "Release date: ${movieDetails.releaseDate}",
             modifier = Modifier.padding(bottom = 20.dp)
         )
     }
