@@ -1,5 +1,6 @@
 package co.veo.veotest.ui.list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,22 +22,32 @@ import com.bumptech.glide.integration.compose.GlideImage
 
 @Composable
 fun ListScreen(
-    movies: State<List<Movie>>
+    state: State<List<Movie>>,
+    onMovieClicked: (movie: Movie) -> Unit
 ) {
     LazyColumn {
-        items(movies.value) { movie ->
-            MovieItem(movie)
+        items(state.value) { movie ->
+            MovieItem(
+                movie = movie,
+                onMovieClicked = onMovieClicked
+            )
         }
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(
+    movie: Movie,
+    onMovieClicked: (movie: Movie) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp)
+            .clickable {
+                onMovieClicked.invoke(movie)
+            }
     ) {
         Text(
             text = movie.title,
@@ -56,24 +67,31 @@ fun MovieItem(movie: Movie) {
 @Preview
 @Composable
 fun ListScreenPreview() {
-    ListScreen(previewData)
+    ListScreen(
+        state = previewData,
+        onMovieClicked = {}
+    )
 }
 
 private val previewData = mutableStateOf(
     listOf(
         Movie(
+            id = 0,
             title = "2001 A space odyssey",
             imageUrl = "https://image.tmdb.org/t/p/w300/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg"
         ),
         Movie(
+            id = 1,
             title = "Blade Runner",
             imageUrl = "https://image.tmdb.org/t/p/w300/63N9uy8nd9j7Eog2axPQ8lbr3Wj.jpg"
         ),
         Movie(
+            id = 2,
             title = "Dune 1",
             imageUrl = "https://image.tmdb.org/t/p/w300/d5NXSklXo0qyIYkgV94XAgMIckC.jpg"
         ),
         Movie(
+            id = 3,
             title = "Dune 2",
             imageUrl = "https://image.tmdb.org/t/p/w300/czembW0Rk1Ke7lCJGahbOhdCuhV.jpg"
         )

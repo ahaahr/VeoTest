@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 object ListDest
 
 @Serializable
-object DetailsDest
+data class DetailsDest(val movieId: Int)

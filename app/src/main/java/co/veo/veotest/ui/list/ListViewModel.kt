@@ -32,6 +32,7 @@ class ListViewModel @Inject constructor(
             mutableMovies.value = body.results.map { movieResponse ->
                 val title = movieResponse.originalTitle ?: (movieResponse.title ?: (movieResponse.name ?: "Unnamed Movie"))
                 Movie(
+                    id = movieResponse.id,
                     title = title,
                     imageUrl = "https://image.tmdb.org/t/p/w300/${movieResponse.posterPath}"
                 )

@@ -7,6 +7,8 @@ data class TrendingResponse(
     val results: List<MovieResponse>
 ) {
     data class MovieResponse(
+        @SerializedName("id")
+        val id: Int,
         @SerializedName("original_name")
         val originalTitle: String?,
         @SerializedName("title")
