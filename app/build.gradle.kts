@@ -67,6 +67,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.0-beta02")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("com.google.dagger:hilt-android:2.48")
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
     api("com.squareup.retrofit2:retrofit:2.9.0")

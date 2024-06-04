@@ -29,9 +29,12 @@ class ListViewModel @Inject constructor(
         val response = apiService.getTrending().execute()
         val body = response.body()
         if (response.isSuccessful && body != null)
-            mutableMovies.value = body.results.map {
-                val title = it.originalTitle ?: (it.title ?: (it.name ?: "Unnamed Movie"))
-                Movie(title)
+            mutableMovies.value = body.results.map { movieResponse ->
+                val title = movieResponse.originalTitle ?: (movieResponse.title ?: (movieResponse.name ?: "Unnamed Movie"))
+                Movie(
+                    title = title,
+                    imageUrl = "https://image.tmdb.org/t/p/w300/${movieResponse.posterPath}"
+                )
             }
     }
 }

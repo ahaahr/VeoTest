@@ -12,6 +12,8 @@ data class TrendingResponse(
         @SerializedName("title")
         val title: String?,
         @SerializedName("name")
-        val name: String?
+        val name: String?,
+        @SerializedName("poster_path")
+        val posterPath: String
     )
 }
