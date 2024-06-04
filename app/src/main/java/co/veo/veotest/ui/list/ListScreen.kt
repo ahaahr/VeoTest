@@ -23,9 +23,6 @@ import com.bumptech.glide.integration.compose.GlideImage
 fun ListScreen(
     movies: State<List<Movie>>
 ) {
-//    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-//        Greeting("Movie list. Movie count: ${movies.value.size}")
-//    }
     LazyColumn {
         items(movies.value) { movie ->
             MovieItem(movie)
